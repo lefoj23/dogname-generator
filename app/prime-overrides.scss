@@ -1,0 +1,46 @@
+@use "./styles/variables" as vars;
+$primaryColor: vars.$primaryColor;
+$primaryTextColor: vars.$primaryTextColor;
+$highlightTextColor: vars.$highlightTextColor;
+$focusRing: vars.$focusRing;
+
+:root {
+  --primary-color: #{vars.$primaryColor} !important;
+  --primary-color-text: #{vars.$primaryTextColor} !important;
+  --highlight-text-color: #{vars.$highlightTextColor} !important;
+  --focus-ring: #{vars.$focusRing} !important;
+  --primary-50: rgba(232, 28, 36, 0.05);
+  --primary-100: rgba(232, 28, 36, 0.1);
+  --primary-200: rgba(232, 28, 36, 0.2);
+  --primary-300: rgba(232, 28, 36, 0.3);
+  --primary-400: rgba(232, 28, 36, 0.4);
+  --primary-500: rgba(232, 28, 36, 0.5);
+  --primary-600: rgba(232, 28, 36, 0.6);
+  --primary-700: rgba(232, 28, 36, 0.7);
+  --primary-800: rgba(232, 28, 36, 0.8);
+  --primary-900: rgba(232, 28, 36, 0.9);
+}
+
+.p-button-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--primary-color-text) !important;
+  border: 1px solid var(--primary-color) !important;
+
+  &.p-button-outlined{
+    background-color: transparent !important;
+  }
+
+  &:hover {
+    background-color: var(--primary-600) !important;
+    border-color: var(--primary-600) !important;
+  }
+
+  &:focus {
+    box-shadow: var(--focus-ring) !important;
+  }
+
+  &:active {
+    background-color: var(--primary-700) !important;
+    border-color: var(--primary-700) !important;
+  }
+}
