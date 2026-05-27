@@ -1,11 +1,25 @@
 @use "../../styles/variables" as vars;
 
-.wrapper {
-  height: 5vh;
-  background-color: vars.$neutralWhite;
+.filterWrapper {
+  height: auto !important;
   width: 100%;
   border-top: 1px solid vars.$neutralLight;
   border-bottom: 1px solid vars.$neutralLight;
-
+  background-color: vars.$neutralWhite;
 }
 
+.filterContainer {
+  align-self: center;
+}
+
+.filterTitle {
+  border-right: 1px solid vars.$neutralLight;
+}
+
+.optionsWrapper {
+  height: auto !important;
+  width: 100%;
+  // border-top: 1px solid vars.$neutralLight;
+  // border-bottom: 1px solid vars.$neutralLight;
+  background-color: vars.$neutralWhite;
+}
