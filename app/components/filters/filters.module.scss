@@ -1,25 +1,50 @@
 @use "../../styles/variables" as vars;
 
+.fontRoboto {
+  font-family: vars.$fontFamily2 !important;
+}
+
 .filterWrapper {
-  height: auto !important;
+  height: calc(5vh + 1rem) !important;
   width: 100%;
   border-top: 1px solid vars.$neutralLight;
   border-bottom: 1px solid vars.$neutralLight;
   background-color: vars.$neutralWhite;
+  // outline: 1px solid vars.$primaryColor;
 }
 
 .filterContainer {
   align-self: center;
+  height: 100% !important;
 }
 
 .filterTitle {
   border-right: 1px solid vars.$neutralLight;
+  height: 100%;
+}
+
+.filters {
+  height: 100% !important;
+  box-sizing: border-box !important;
+  border: 1px solid transparent;
+  &:last-child {
+    border-right: 1px solid vars.$neutralLight;
+  }
+  &.isSelected,
+  .isSelected::before,
+  .isSelected::after {
+    border: 1px solid vars.$primaryColor;
+    border-bottom: 1px solid vars.$neutralWhite;
+    outline: 1px solid vars.$neutralWhite;
+    // outline-offset: 2px;
+  }
 }
 
 .optionsWrapper {
-  height: auto !important;
+  height: calc(5vh + 1rem) !important;
   width: 100%;
-  // border-top: 1px solid vars.$neutralLight;
-  // border-bottom: 1px solid vars.$neutralLight;
   background-color: vars.$neutralWhite;
+  > div {
+    height: 100%;
+  }
 }

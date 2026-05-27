@@ -26,7 +26,7 @@ $focusRing: vars.$focusRing;
   color: var(--primary-color-text) !important;
   border: 1px solid var(--primary-color) !important;
 
-  &.p-button-outlined{
+  &.p-button-outlined {
     background-color: transparent !important;
   }
 
@@ -43,4 +43,20 @@ $focusRing: vars.$focusRing;
     background-color: var(--primary-700) !important;
     border-color: var(--primary-700) !important;
   }
+}
+
+.p-checkbox .p-checkbox-input {
+  border: 2px solid var(--primary-color) !important;
+  border-radius: 2px;
+}
+
+
+.p-checkbox .p-checkbox-box {
+  border: 2px solid var(--primary-color) !important;
+  border-radius: 2px;
+}
+
+.p-checkbox.p-highlight .p-checkbox-box {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
 }

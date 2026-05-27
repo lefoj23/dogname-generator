@@ -4,6 +4,7 @@ import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "./primereact-overrides.scss"; // custom styles to override primereact defaults
+import ReduxProvider from "./providers/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Dog Name Generator",
@@ -23,7 +24,9 @@ export default function RootLayout({
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   );
 }

@@ -2,13 +2,21 @@
 import styles from "./filters.module.scss";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useCategoriesDriveData } from "../../hooks/useCategoriesDriveData";
+import { useCategorySelection } from "../../hooks/useCategorySelection";
 import { Skeleton } from "primereact/skeleton";
 import { ICategoriesData, IFilterGroups } from "../../models/categories";
 import { useState, useEffect } from "react";
 import { Checkbox } from "primereact/checkbox";
+
 const Filters = () => {
   const isMobile = useIsMobile();
   const { data, loading, error, refresh } = useCategoriesDriveData();
+  const {
+    selectedCategoryIds,
+    toggleCategory,
+    isCategorySelected,
+    clearCategories,
+  } = useCategorySelection();
 
   const [filterGroups, setFilterGroups] = useState<IFilterGroups[]>([]);
   const [categories, setCategories] = useState<ICategoriesData[]>([]);
@@ -31,8 +39,9 @@ const Filters = () => {
     const updatedGroups = filterGroups.map((group) => {
       if (group === filterGroup) {
         return { ...group, isSelected: !group.isSelected };
+      } else {
+        return { ...group, isSelected: false };
       }
-      return group;
     });
     setSelectedFilter(filterGroup.isSelected ? null : filterGroup);
 
@@ -54,11 +63,14 @@ const Filters = () => {
             <div
               key={group.id}
               className={
-                "flex items-center align-middle px-3 cursor-pointer hover:bg-gray-100"
+                styles.filters +
+                ` flex items-center align-middle px-3 cursor-pointer hover:bg-gray-100 ${group.isSelected && styles.isSelected}`
               }
               onClick={() => expandFilter(group)}
             >
-              <h4 className={"text-lg p-3"}>{group.label}</h4>
+              <h4 className={styles.fontRoboto + " text-lg p-3"}>
+                {group.label}
+              </h4>
               <i
                 className={
                   (group.isSelected ? "pi pi-angle-up" : "pi pi-angle-down") +
@@ -83,19 +95,25 @@ const Filters = () => {
         {loading ? (
           <Skeleton height="2rem" className="mb-2"></Skeleton>
         ) : (
-          <div className="card flex flex-wrap justify-content-center gap-3">
+          <div className="flex flex-row flex-wrap justify-center items-center gap-3">
             {selectedCategories.map((category) => {
-              console.log(category);
+              const isSelected = isCategorySelected(category.id);
               return (
-                <div className="flex align-items-center">
+                <div
+                  key={category.id}
+                  className="flex align-items-center min-w-40"
+                >
                   <Checkbox
-                    inputId="ingredient1"
-                    name="pizza"
+                    inputId={`category-${category.id}`}
+                    name={category.id}
                     value={category.id}
-                    onChange={() => {}}
-                    checked={false}
+                    onChange={() => toggleCategory(category.id)}
+                    checked={isSelected}
                   />
-                  <label htmlFor="ingredient1" className="ml-2">
+                  <label
+                    htmlFor={`category-${category.id}`}
+                    className={styles.fontRoboto + " ml-2 cursor-pointer"}
+                  >
                     {category.name}
                   </label>
                 </div>
@@ -131,9 +149,12 @@ const Filters = () => {
           {renderFilterTabs()}
         </div>
       </div>
-      <div className={styles.optionsWrapper + " flex items-center"}>
-        {renderOptions()}
-      </div>
+
+      {selectedCategories.length > 0 && (
+        <div className={styles.optionsWrapper + " flex flex-col items-center"}>
+          {renderOptions()}
+        </div>
+      )}
 
       {/* <div className="flex flex-col gap-3 p-4">
           {loading && <p>Loading filter categories...</p>}
