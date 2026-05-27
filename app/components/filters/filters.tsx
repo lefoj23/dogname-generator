@@ -56,35 +56,31 @@ const Filters = () => {
   const renderFilterTabs = () => {
     return (
       <>
-        {loading ? (
-          <Skeleton height="2rem" className="mb-2"></Skeleton>
-        ) : (
-          filterGroups.map((group) => (
-            <div
-              key={group.id}
+        {filterGroups.map((group) => (
+          <div
+            key={group.id}
+            className={
+              styles.filters +
+              ` flex items-center align-middle px-3 cursor-pointer hover:bg-gray-100 ${group.isSelected && styles.isSelected}`
+            }
+            onClick={() => expandFilter(group)}
+          >
+            <h4 className={styles.fontRoboto + " text-lg p-3"}>
+              {group.label}
+            </h4>
+            <i
               className={
-                styles.filters +
-                ` flex items-center align-middle px-3 cursor-pointer hover:bg-gray-100 ${group.isSelected && styles.isSelected}`
+                (group.isSelected ? "pi pi-angle-up" : "pi pi-angle-down") +
+                " text-2xl items-center primary"
               }
-              onClick={() => expandFilter(group)}
-            >
-              <h4 className={styles.fontRoboto + " text-lg p-3"}>
-                {group.label}
-              </h4>
-              <i
-                className={
-                  (group.isSelected ? "pi pi-angle-up" : "pi pi-angle-down") +
-                  " text-2xl items-center primary"
-                }
-                style={{
-                  color: "var(--primary-color)",
-                  fontSize: "1.25rem",
-                  fontWeight: "lighter",
-                }}
-              ></i>
-            </div>
-          ))
-        )}
+              style={{
+                color: "var(--primary-color)",
+                fontSize: "1.25rem",
+                fontWeight: "lighter",
+              }}
+            ></i>
+          </div>
+        ))}
       </>
     );
   };
@@ -92,96 +88,69 @@ const Filters = () => {
   const renderOptions = () => {
     return (
       <>
-        {loading ? (
-          <Skeleton height="2rem" className="mb-2"></Skeleton>
-        ) : (
-          <div className="flex flex-row flex-wrap justify-center items-center gap-3">
-            {selectedCategories.map((category) => {
-              const isSelected = isCategorySelected(category.id);
-              return (
-                <div
-                  key={category.id}
-                  className="flex align-items-center min-w-40"
+        <div className="flex flex-row flex-wrap justify-center items-center gap-3">
+          {selectedCategories.map((category) => {
+            const isSelected = isCategorySelected(category.id);
+            return (
+              <div
+                key={category.id}
+                className="flex align-items-center min-w-40"
+              >
+                <Checkbox
+                  inputId={`category-${category.id}`}
+                  name={category.id}
+                  value={category.id}
+                  onChange={() => toggleCategory(category.id)}
+                  checked={isSelected}
+                />
+                <label
+                  htmlFor={`category-${category.id}`}
+                  className={styles.fontRoboto + " ml-2 cursor-pointer"}
                 >
-                  <Checkbox
-                    inputId={`category-${category.id}`}
-                    name={category.id}
-                    value={category.id}
-                    onChange={() => toggleCategory(category.id)}
-                    checked={isSelected}
-                  />
-                  <label
-                    htmlFor={`category-${category.id}`}
-                    className={styles.fontRoboto + " ml-2 cursor-pointer"}
-                  >
-                    {category.name}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                  {category.name}
+                </label>
+              </div>
+            );
+          })}
+        </div>
       </>
     );
   };
 
   return (
     <>
-      <div
-        className={
-          styles.filterWrapper +
-          " flex flex-col items-stretch justify-center h-screen gap-4 max-w-full max-h-auto"
-        }
-      >
-        <div className={styles.filterContainer + " flex items-center"}>
-          <div
-            className={styles.filterTitle + " flex items-center align-middle"}
-          >
-            <h4
-              className={
-                "text-lg p-3 align-middle" +
-                (isMobile ? " min-w-3/4 w-3/4" : "")
-              }
+      {loading ? (
+        <Skeleton height="3rem" className="mb-1"></Skeleton>
+      ) : (
+        <div
+          className={
+            styles.filterWrapper +
+            " flex flex-col items-stretch justify-center h-screen gap-4 max-w-full max-h-auto"
+          }
+        >
+          <div className={styles.filterContainer + " flex items-center"}>
+            <div
+              className={styles.filterTitle + " flex items-center align-middle"}
             >
-              Filters:
-            </h4>
+              <h4
+                className={
+                  "text-lg p-3 align-middle" +
+                  (isMobile ? " min-w-3/4 w-3/4" : "")
+                }
+              >
+                Filters:
+              </h4>
+            </div>
+            {renderFilterTabs()}
           </div>
-          {renderFilterTabs()}
         </div>
-      </div>
+      )}
 
       {selectedCategories.length > 0 && (
         <div className={styles.optionsWrapper + " flex flex-col items-center"}>
           {renderOptions()}
         </div>
       )}
-
-      {/* <div className="flex flex-col gap-3 p-4">
-          {loading && <p>Loading filter categories...</p>}
-          {error && (
-            <div>
-              <p className="text-red-600">Unable to load categories.</p>
-              <pre>{error.message}</pre>
-              <button className="p-button p-button-secondary" onClick={() => void refresh()}>
-                Retry
-              </button>
-            </div>
-          )}
-          {!loading && !error && (
-            <pre className="whitespace-pre-wrap break-words">{JSON.stringify(data, null, 2)}</pre>
-          )}
-        </div> */}
-
-      {/* {isMobile && (
-          <>
-            <i
-              className="pi pi-filter text-2xl min-w-1/4 w-1/4 p-3 text-right items-center primary"
-              style={{ color: "var(--primary-color)", fontSize: "1.25rem" }}
-            ></i>
-          </>
-        )} */}
-
-      {/* <div className="flex gap-4 items-center">test</div> */}
     </>
   );
 };
