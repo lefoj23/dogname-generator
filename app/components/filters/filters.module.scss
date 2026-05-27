@@ -1,0 +1,11 @@
+@use "../../styles/variables" as vars;
+
+.wrapper {
+  height: 5vh;
+  background-color: vars.$neutralWhite;
+  width: 100%;
+  border-top: 1px solid vars.$neutralLight;
+  border-bottom: 1px solid vars.$neutralLight;
+
+}
+
