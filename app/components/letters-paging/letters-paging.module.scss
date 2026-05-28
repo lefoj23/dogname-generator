@@ -42,4 +42,14 @@
     color: vars.$neutralWhite;
     background-color: vars.$primaryColor !important;
   }
+
+  &.mobile {
+    padding: 0;
+    margin: 1rem auto;
+
+    :global(.p-button) {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
 }

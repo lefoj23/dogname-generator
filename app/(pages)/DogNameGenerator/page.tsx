@@ -7,10 +7,7 @@ import styles from "./page.module.scss";
 export default async function DogNameGenerator() {
   return (
     <div
-      className={
-        styles.pageWrapper +
-        " flex flex-col items-center justify-start h-screen w-screen"
-      }
+      className={"flex flex-col items-center justify-start h-screen w-screen"}
     >
       <GenderSelection />
       <Filters />

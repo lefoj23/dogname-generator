@@ -1,6 +1,13 @@
 @use "../../styles/variables" as vars;
 
 .pageWrapper {
+  width: 100vw;
+
+  &.mobile {
+    margin: 2rem auto;
+    height: 25vh;
+  }
+
   h1 {
     position: absolute;
     // width: 100vw;
@@ -12,11 +19,11 @@
     line-height: 0.8 !important;
     align-self: center;
     // top:20;
-    transform: translateY(-10vh);
     color: vars.$primaryColor;
     z-index: -99;
+    transform: translateY(-10vh);
     &.mobile {
-      font-size: 6rem;
+      font-size: calc(8rem * 0.8);
       transform: translateY(-5vh);
     }
   }
@@ -24,10 +31,10 @@
   img {
     margin: 2rem;
     z-index: 99;
-    width: 75%;
+    height: 75%;
 
     &.mobile {
-      width: 30vw;
+      height: 100%;
     }
   }
 }

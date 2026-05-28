@@ -8,7 +8,12 @@ export default function Body() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center h-auto w-100 mt-4 ${isMobile && styles.mobile}`}
+      className={
+        styles.pageWrapper +
+        (isMobile
+          ? ` flex flex-row items-center justify-center w-100 ${styles.mobile}`
+          : ` flex flex-col items-center justify-center h-auto w-100 mt-4`)
+      }
     >
       <h1 className={`text-2xl font-bold ${isMobile && styles.mobile}`}>
         I NEED

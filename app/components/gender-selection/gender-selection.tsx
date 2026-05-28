@@ -4,9 +4,11 @@ import styles from "./gender-selection.module.scss";
 import { environment } from "../../config/environment";
 import { useState, useEffect } from "react";
 import { Skeleton } from "primereact/skeleton";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export default function GenderSelection() {
   const [isLoading, setIsLoading] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (environment.featureflag.simulateSlowNetwork) {
@@ -19,8 +21,8 @@ export default function GenderSelection() {
     <>
       {isLoading ? (
         <>
-          <Skeleton width="15vw" height="4rem" className="mb-1 mt-2"></Skeleton>
-          <Skeleton width="15vw" height="4rem" className="mb-4"></Skeleton>
+          <Skeleton width={isMobile ? "75vw" : "15vw"} height="4rem" className="mb-1 mt-2"></Skeleton>
+          <Skeleton width={isMobile ? "75vw" : "15vw"} height="4rem" className="mb-4"></Skeleton>
         </>
       ) : (
         <div
