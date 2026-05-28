@@ -2,7 +2,6 @@ import GenderSelection from "../../components/gender-selection/gender-selection"
 import Filters from "../../components/filters/filters";
 import LettersPaging from "../../components/letters-paging/letters-paging";
 import Body from "./body";
-import styles from "./page.module.scss";
 
 export default async function DogNameGenerator() {
   return (
@@ -13,7 +12,7 @@ export default async function DogNameGenerator() {
       <Filters />
       <LettersPaging />
       <br />
-      <Body/>
+      <Body />
     </div>
   );
 }

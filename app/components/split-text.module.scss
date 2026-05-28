@@ -1,0 +1,10 @@
+.line {
+  display: block;
+  line-height: .8;
+  white-space: nowrap;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+}

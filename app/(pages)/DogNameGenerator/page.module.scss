@@ -2,15 +2,19 @@
 
 .pageWrapper {
   width: 100vw;
+  // overflow: hidden;
 
   &.mobile {
     margin: 2rem auto;
     height: calc(50% - 5rem);
+    max-width: 100vw;
   }
 
   h1 {
+    display: flex;
     position: absolute;
-    // width: 100vw;
+    flex-direction: column;
+    // width: 75vw;
     font-size: 15rem;
     text-align: center !important;
     word-wrap: break-word;
@@ -21,19 +25,37 @@
     // top:20;
     color: vars.$primaryColor;
     z-index: -99;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
     transform: translateY(-10vh);
     &.mobile {
       font-size: calc(8rem * 0.75);
       transform: translateY(-5vh);
+      width: calc(100% - 2rem);
+      margin: 0 auto;
     }
   }
 
   img {
-    margin: 2rem;
+    margin: 0 auto;
     z-index: 99;
     height: 75%;
     &.mobile {
       height: calc(80% - 2rem);
     }
+  }
+}
+
+
+.nameItem {
+  font-family: vars.$fontFamily;
+  font-size: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  &.isSelected {
+    background-color: vars.$primaryColor;
+    color: vars.$neutralWhite;
   }
 }
