@@ -21,9 +21,10 @@ const Filters = () => {
   const [filterGroups, setFilterGroups] = useState<IFilterGroups[]>([]);
   const [categories, setCategories] = useState<ICategoriesData[]>([]);
 
-  const [selectedFilter, setSelectedFilter] = useState<IFilterGroups | null>(
-    null,
-  );
+  // const [selectedFilter, setSelectedFilter] = useState<IFilterGroups | null>(
+  //   null,
+  // );
+
   const [selectedCategories, setSelectedCategories] = useState<
     ICategoriesData[]
   >([]);
@@ -33,8 +34,9 @@ const Filters = () => {
     if (data?.data) setCategories(data.data);
   }, [data]);
 
+
   const expandFilter = (filterGroup: IFilterGroups) => {
-    setSelectedFilter(null);
+    // setSelectedFilter(null);
 
     const updatedGroups = filterGroups.map((group) => {
       if (group === filterGroup) {
@@ -43,7 +45,7 @@ const Filters = () => {
         return { ...group, isSelected: false };
       }
     });
-    setSelectedFilter(filterGroup.isSelected ? null : filterGroup);
+    // setSelectedFilter(filterGroup.isSelected ? null : filterGroup);
 
     let selectedCategoryies = categories.filter((category) =>
       filterGroup.categoryIds.includes(category.id),
@@ -120,7 +122,7 @@ const Filters = () => {
   return (
     <>
       {loading ? (
-        <Skeleton height="3rem" className="mb-1"></Skeleton>
+        <Skeleton height="4rem" className="mb-1"></Skeleton>
       ) : (
         <div
           className={

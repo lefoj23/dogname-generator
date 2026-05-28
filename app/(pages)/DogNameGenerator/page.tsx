@@ -1,12 +1,13 @@
 import GenderSelection from "../../components/gender-selection/gender-selection";
 import Filters from "../../components/filters/filters";
+import LettersPaging from "../../components/letters-paging/letters-paging";
 
-export default function DogNameGenerator() {
-
+export default async function DogNameGenerator() {
   return (
     <div className="flex flex-col items-center justify-start h-screen">
       <GenderSelection />
       <Filters />
+      <LettersPaging />
     </div>
   );
 }
