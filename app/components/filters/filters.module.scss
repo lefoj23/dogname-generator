@@ -11,16 +11,26 @@
   border-bottom: 1px solid vars.$neutralLight;
   background-color: vars.$neutralWhite;
   // outline: 1px solid vars.$primaryColor;
+  &.mobile {
+    height: unset !important;
+  }
 }
 
 .filterContainer {
   align-self: center;
   height: 100% !important;
+  &.mobile {
+    height: unset !important;
+  }
 }
 
 .filterTitle {
   border-right: 1px solid vars.$neutralLight;
   height: 100%;
+
+  &:global(.border-r-0) {
+    border-right: unset !important;
+  }
 }
 
 .filters {
@@ -29,7 +39,11 @@
   border: 1px solid transparent;
   &:last-child {
     border-right: 1px solid vars.$neutralLight;
+    &.mobile:not(.isSelected) {
+      border-right: 1px solid transparent;
+    }
   }
+
   &.isSelected,
   .isSelected::before,
   .isSelected::after {
@@ -37,6 +51,16 @@
     border-bottom: 1px solid vars.$neutralWhite;
     outline: 1px solid vars.$neutralWhite;
     // outline-offset: 2px;
+  }
+
+  &.mobile {
+    height: unset !important;
+
+    &.isSelected,
+    .isSelected::before,
+    .isSelected::after {
+      border: 1px solid vars.$primaryColor;
+    }
   }
 }
 
@@ -46,5 +70,11 @@
   background-color: vars.$neutralWhite;
   > div {
     height: 100%;
+  }
+
+  &.mobile {
+    height: unset !important;
+    margin-top: 1rem;
+    padding: 1rem;
   }
 }

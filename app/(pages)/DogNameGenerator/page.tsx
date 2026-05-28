@@ -4,7 +4,7 @@ import LettersPaging from "../../components/letters-paging/letters-paging";
 
 export default async function DogNameGenerator() {
   return (
-    <div className="flex flex-col items-center justify-start h-screen">
+    <div className="flex flex-col items-center justify-start h-screen w-screen">
       <GenderSelection />
       <Filters />
       <LettersPaging />

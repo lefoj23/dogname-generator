@@ -1,6 +1,6 @@
 export default function Index() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4">
+    <div className="flex flex-col items-center justify-center h-screen w-100 gap-4">
       <h1 className="text-4xl font-bold">Welcome to the Dog Name Generator!</h1>
       <p className="text-lg text-gray-600">
         Click the button below to enter in to the generator.

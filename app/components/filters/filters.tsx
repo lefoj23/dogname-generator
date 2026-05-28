@@ -20,10 +20,7 @@ const Filters = () => {
 
   const [filterGroups, setFilterGroups] = useState<IFilterGroups[]>([]);
   const [categories, setCategories] = useState<ICategoriesData[]>([]);
-
-  // const [selectedFilter, setSelectedFilter] = useState<IFilterGroups | null>(
-  //   null,
-  // );
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [selectedCategories, setSelectedCategories] = useState<
     ICategoriesData[]
@@ -34,10 +31,7 @@ const Filters = () => {
     if (data?.data) setCategories(data.data);
   }, [data]);
 
-
   const expandFilter = (filterGroup: IFilterGroups) => {
-    // setSelectedFilter(null);
-
     const updatedGroups = filterGroups.map((group) => {
       if (group === filterGroup) {
         return { ...group, isSelected: !group.isSelected };
@@ -45,8 +39,6 @@ const Filters = () => {
         return { ...group, isSelected: false };
       }
     });
-    // setSelectedFilter(filterGroup.isSelected ? null : filterGroup);
-
     let selectedCategoryies = categories.filter((category) =>
       filterGroup.categoryIds.includes(category.id),
     );
@@ -63,7 +55,7 @@ const Filters = () => {
             key={group.id}
             className={
               styles.filters +
-              ` flex items-center align-middle px-3 cursor-pointer hover:bg-gray-100 ${group.isSelected && styles.isSelected}`
+              ` flex items-center align-middle px-3 cursor-pointer hover:bg-gray-100 ${isMobile && styles.mobile} ${group.isSelected && styles.isSelected}`
             }
             onClick={() => expandFilter(group)}
           >
@@ -127,29 +119,62 @@ const Filters = () => {
         <div
           className={
             styles.filterWrapper +
-            " flex flex-col items-stretch justify-center h-screen gap-4 max-w-full max-h-auto"
+            (isMobile
+              ? ` flex flex-col items-stretch justify-start max-w-full ${styles.mobile}`
+              : " flex flex-col items-stretch justify-center h-screen gap-4 max-w-full max-h-auto")
           }
         >
-          <div className={styles.filterContainer + " flex items-center"}>
+          <div
+            className={
+              styles.filterContainer +
+              " flex items-center min-w-full" +
+              (isMobile ? " justify-start" : " justify-center")
+            }
+          >
             <div
-              className={styles.filterTitle + " flex items-center align-middle"}
+              className={
+                styles.filterTitle +
+                (isMobile
+                  ? " flex items-center justify-start align-middle min-w-1/4 w-1/4 border-r-0"
+                  : " flex items-center align-middle")
+              }
             >
-              <h4
-                className={
-                  "text-lg p-3 align-middle" +
-                  (isMobile ? " min-w-3/4 w-3/4" : "")
-                }
-              >
-                Filters:
-              </h4>
+              <h4 className={"text-lg p-3 align-middle"}>Filters:</h4>
             </div>
-            {renderFilterTabs()}
+            {isMobile ? (
+              <i
+                className={`pi ${isFilterOpen ? "pi-filter-fill" : "pi-filter"} w-3/4 text-right m-4 cursor-pointer`}
+                onClick={() => setIsFilterOpen((open) => !open)}
+              ></i>
+            ) : (
+              renderFilterTabs()
+            )}
           </div>
+
+          {isMobile && isFilterOpen && (
+            <div
+              className={
+                styles.filterContainer +
+                ` flex flex-row items-center justify-around flex-wrap ${styles.mobile}`
+              }
+            >
+              {renderFilterTabs()}
+            </div>
+          )}
         </div>
       )}
 
-      {selectedCategories.length > 0 && (
-        <div className={styles.optionsWrapper + " flex flex-col items-center"}>
+      {(isMobile
+        ? selectedCategories.length > 0 && isFilterOpen
+        : selectedCategories.length > 0) && (
+        <div
+          className={
+            styles.optionsWrapper +
+            (isMobile
+              ? ` flex flex-col items-center ${styles.mobile} justify-around flex-wrap text-center`
+              : ` flex flex-col items-center`)
+          }
+        >
           {renderOptions()}
         </div>
       )}
