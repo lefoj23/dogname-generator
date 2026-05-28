@@ -35,6 +35,15 @@
       width: calc(100% - 2rem);
       margin: 0 auto;
     }
+
+    &.noResults {
+      font-size: 7rem;
+      text-align: right !important;
+      align-items: flex-end;
+      width: 40vw;
+      line-height: 1.5 !important;
+      transform: unset;
+    }
   }
 
   img {
@@ -51,7 +60,7 @@
     height: 100%;
   }
 
-  ul{
+  ul {
     min-width: 100%;
   }
 }
@@ -98,5 +107,3 @@
   width: 3rem;
   font-size: 5rem;
 }
-
-

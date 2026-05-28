@@ -6,8 +6,9 @@ import SplitText from "../../components/SplitText";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useAppSelector } from "../../store/hooks";
 import { motion, AnimatePresence } from "motion/react";
-import { useNamesDriveData } from "@/app/hooks/useNamesDriveData";
+import { useNamesDriveData } from "../../hooks/useNamesDriveData";
 import { JSX, useState, useEffect } from "react";
+import { INamesResponse } from "../../models/names";
 
 export default function Body() {
   const { data } = useNamesDriveData();
@@ -18,10 +19,17 @@ export default function Body() {
   const selectedLetter = useAppSelector(
     (state) => state.letters.selectedLetter,
   );
+
+  const selectedGender = useAppSelector((state) => state.gender.selectedGender);
+  const selectedCategoryIds = useAppSelector(
+    (state) => state.category.selectedCategoryIds,
+  );
+
   const [selectedNameIndex, setSelectedNameIndex] = useState<number | null>(
     null,
   );
   const [nameElements, setNameElements] = useState<JSX.Element[]>([]);
+  const [loadedNames, setLoadedNames] = useState<INamesResponse | null>(data);
 
   const LandingPage = () => {
     return (
@@ -56,7 +64,7 @@ export default function Body() {
     if (index != null && typeof index === "number") {
       selectedIndex = index;
       startIndex = Math.max(0, selectedIndex - 3);
-      endIndex = Math.min(startIndex + 7, data?.data.length ?? 0);
+      endIndex = Math.min(startIndex + 7, loadedNames?.data.length ?? 0);
 
       if (endIndex - startIndex < 7) {
         startIndex = Math.max(0, endIndex - 7);
@@ -69,11 +77,11 @@ export default function Body() {
     for (let i = startIndex; i < endIndex; i++) {
       items.push(
         <li
-          key={data?.data[i]?.id ?? `name-${i}`}
+          key={loadedNames?.data[i]?.id ?? `name-${i}`}
           className={`${styles.nameItem} ${selectedIndex === i ? styles.isSelected : ""} cursor-pointer ${styles[`nameIndex-${count}`]}`}
           onClick={() => JumpToName(i, selectedIndex)}
         >
-          {data?.data[i]?.title}
+          {loadedNames?.data[i]?.title}
         </li>,
       );
       count++;
@@ -97,20 +105,43 @@ export default function Body() {
   };
 
   useEffect(() => {
-    if (selectedLetter) {
-      let letterIndex =
-        data?.data.findIndex((name) =>
-          name.title.startsWith(selectedLetter ?? "a"),
-        ) ?? null;
-      setSelectedNameIndex(letterIndex);
-      renderNames(letterIndex);
+    let letterIndex =
+      loadedNames?.data.findIndex((name) =>
+        name.title.startsWith(selectedLetter ?? "a"),
+      ) ?? null;
+    letterIndex = letterIndex === 0 ? 3 : letterIndex;
+    setSelectedNameIndex(letterIndex);
+    renderNames(letterIndex);
+  }, [selectedLetter, loadedNames, data]);
+
+  useEffect(() => {
+    setNameElements([]);
+
+    let filteredNames = data?.data;
+
+    if (selectedGender && selectedGender !== "Both") {
+      filteredNames = filteredNames?.filter((name) =>
+        name.gender.includes(selectedGender[0]),
+      );
     }
-  }, [selectedLetter]);
+
+    if (selectedCategoryIds.length > 0) {
+      filteredNames = filteredNames?.filter((name) =>
+        selectedCategoryIds.every((catId) => name.categories.includes(catId)),
+      );
+    }
+
+    setLoadedNames({ data: filteredNames ?? [] });
+    setSelectedNameIndex(null);
+    renderNames(null);
+  }, [selectedGender, data, selectedCategoryIds]);
 
   if (loading || error) return null;
   return (
     <>
-      {selectedLetter == null ? (
+      {selectedLetter == null &&
+      selectedGender == null &&
+      selectedCategoryIds.length === 0 ? (
         LandingPage()
       ) : (
         <div
@@ -127,44 +158,51 @@ export default function Body() {
               alt="Dog"
               className={`${isMobile && styles.mobile} ${styles.dogImage2}`}
             />
-            <ul className="w-2/5">{nameElements}</ul>
 
-            <div className="flex flex-col items-center justify-center w-100 w-1/5">
-              <i
-                className={
-                  "pi pi-angle-up text-2xl items-center primary cursor-pointer h-1/4" +
-                  styles.arrowIcon
-                }
-                style={{
-                  color: "var(--primary-color)",
-                  fontSize: "3.5rem",
-                  fontWeight: "200",
-                }}
-                onClick={() => {
-                  selectedNameIndex !== null && selectedNameIndex > 0
-                    ? renderNames(selectedNameIndex - 1)
-                    : null;
-                }}
+            <ul className="w-2/5">{nameElements}</ul>
+            {loadedNames?.data && loadedNames?.data.length > 0 ? (
+              <div className="flex flex-col items-center justify-center w-100 w-1/5">
+                <i
+                  className={
+                    "pi pi-angle-up text-2xl items-center primary cursor-pointer h-1/4" +
+                    styles.arrowIcon
+                  }
+                  style={{
+                    color: "var(--primary-color)",
+                    fontSize: "3.5rem",
+                    fontWeight: "200",
+                  }}
+                  onClick={() => {
+                    selectedNameIndex !== null && selectedNameIndex > 0
+                      ? renderNames(selectedNameIndex - 1)
+                      : null;
+                  }}
+                />
+                <div className="block h-100"></div>
+                <i
+                  className={
+                    "pi pi-angle-down text-2xl items-center primary cursor-pointer h-1/4" +
+                    styles.arrowIcon
+                  }
+                  style={{
+                    color: "var(--primary-color)",
+                    fontSize: "3.5rem",
+                    fontWeight: "200",
+                  }}
+                  onClick={() => {
+                    selectedNameIndex !== null &&
+                    selectedNameIndex < (loadedNames?.data.length ?? 0) - 1
+                      ? renderNames(selectedNameIndex + 1)
+                      : null;
+                  }}
+                />
+              </div>
+            ) : (
+              <SplitText
+                text={`Ooops we\n don't have any\n names that match\n your criteria!`}
+                className={`text-2sm font-bold ${isMobile && styles.mobile} ${styles.noResults}`}
               />
-              <div className="block h-100"></div>
-              <i
-                className={
-                  "pi pi-angle-down text-2xl items-center primary cursor-pointer h-1/4" +
-                  styles.arrowIcon
-                }
-                style={{
-                  color: "var(--primary-color)",
-                  fontSize: "3.5rem",
-                  fontWeight: "200",
-                }}
-                onClick={() => {
-                  selectedNameIndex !== null &&
-                  selectedNameIndex < (data?.data.length ?? 0) - 1
-                    ? renderNames(selectedNameIndex + 1)
-                    : null;
-                }}
-              />
-            </div>
+            )}
           </div>
         </div>
       )}
