@@ -1,0 +1,33 @@
+@use "../../styles/variables" as vars;
+
+.pageWrapper {
+  h1 {
+    position: absolute;
+    // width: 100vw;
+    font-size: 15rem;
+    text-align: center !important;
+    word-wrap: break-word;
+    font-family: vars.$fontFamily;
+    margin: 0 auto;
+    line-height: 0.8 !important;
+    align-self: center;
+    // top:20;
+    transform: translateY(-10vh);
+    color: vars.$primaryColor;
+    z-index: -99;
+    &.mobile {
+      font-size: 6rem;
+      transform: translateY(-5vh);
+    }
+  }
+
+  img {
+    margin: 2rem;
+    z-index: 99;
+    width: 75%;
+
+    &.mobile {
+      width: 30vw;
+    }
+  }
+}
