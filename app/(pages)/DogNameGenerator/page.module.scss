@@ -47,15 +47,36 @@
   }
 }
 
-
 .nameItem {
   font-family: vars.$fontFamily;
-  font-size: 1.5rem;
+  font-size: 3rem;
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 300;
+
   &.isSelected {
-    background-color: vars.$primaryColor;
-    color: vars.$neutralWhite;
+    // background-color: vars.$primaryColor;
+    color: vars.$primaryColor;
+    font-size: 3.5rem;
+    font-weight: 400;
+  }
+
+  &:hover{
+    color: vars.$primaryColor;
+  }
+  
+  &.nameIndex-0, &.nameIndex-6{
+    opacity: 0.25;
+  }
+  &.nameIndex-1, &.nameIndex-5{
+    opacity: 0.50;
+  }
+  &.nameIndex-2, &.nameIndex-4{
+    opacity: 0.75;
   }
 }

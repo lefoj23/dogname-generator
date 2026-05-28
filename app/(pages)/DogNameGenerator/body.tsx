@@ -48,30 +48,42 @@ export default function Body() {
 
   const renderNames = (index: number | null) => {
     const items: JSX.Element[] = [];
-
     let letterIndex = data?.data.findIndex((name) =>
       name.title.startsWith(selectedLetter ?? "a"),
     );
     let startIndex = letterIndex ?? 0;
     let endIndex = startIndex + 7;
     let selectedIndex = startIndex + 3;
+
+    if (index != null && typeof index === "number") {
+      selectedIndex = index;
+      startIndex = Math.max(0, selectedIndex - 3);
+      endIndex = Math.min(startIndex + 7, data?.data.length ?? 0);
+
+      if (endIndex - startIndex < 7) {
+        startIndex = Math.max(0, endIndex - 7);
+      }
+    }
+
     setSelectedNameIndex(selectedIndex);
+    let count = 0;
     for (let i = startIndex; i < endIndex; i++) {
       items.push(
         <li
-          className={`${styles.nameItem} ${selectedIndex === i && styles.isSelected}`}
-          key={data?.data[i]?.id}
+          key={data?.data[i]?.id ?? `name-${data?.data[i]?.title}`}
+          className={`${styles.nameItem} ${selectedIndex === i && styles.isSelected} cursor-pointer ${styles[`nameIndex-${count}`]}`}
+          onClick={() => renderNames(i)}
         >
-          {" "}
           {data?.data[i]?.title}
         </li>,
       );
+      count++;
     }
     setNameElements(items);
   };
 
   useEffect(() => {
-    renderNames(null);
+    if (selectedLetter) renderNames(null);
   }, [selectedLetter]);
 
   if (loading || error) return null;

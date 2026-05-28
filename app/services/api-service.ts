@@ -59,13 +59,6 @@ export async function fetchLettersDriveData(): Promise<ILettersResponse> {
 }
 
 export async function fetchNamesDriveData(): Promise<INamesResponse> {
-  // const url = `${environment.api.driveApiUrl}/${environment.api.namesDriveFileId}?alt=media&key=${API_KEY}`;
-
-  // const response = await axios.get<INamesResponse>(url);
-  // await new Promise((resolve) =>
-  //   setTimeout(resolve, environment.featureflag.simulateSlowNetwork ? 1000 : 0),
-  // );
-  // return response.data;
   const url = environment.featureflag.useGoogleDriveStorage
     ? `${environment.api.driveApiUrl}/${environment.api.namesDriveFileId}?alt=media&key=${API_KEY}`
     : `${environment.api.jsonStorageApiUrl}${environment.api.namesDriveFileId}`;
