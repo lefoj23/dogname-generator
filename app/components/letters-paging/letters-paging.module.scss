@@ -4,26 +4,42 @@
   // max-width: 70vw;
   height: unset;
   border-radius: 99px;
-  padding:5px;
+  padding: 5px;
   margin: 1rem auto;
   :global(.p-card-body) {
     padding: 0ch !important;
     // background-color: red !important;
     :global(.p-card-content) {
       padding: 0px !important;
+      display: flex;
+      flex-wrap: no-wrap;
     }
   }
 
-  :global(.p-button){
-    // color: var(--primary-color);
-    // padding:1rem;
+  :global(.p-button) {
     color: var(--foreground);
     font-family: vars.$fontFamily;
     font-weight: lighter !important;
     border-radius: 99px;
-    height:2.5rem;
-    width:2.5rem;
-    text-align:center;
-    line-height: 0.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    text-align: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: unset !important;
+    border: unset !important;
+
+    &:active {
+      color: vars.$neutralWhite;
+      background-color: vars.$primaryColor !important;
+    }
+  }
+
+  .selectedLetter {
+    color: vars.$neutralWhite;
+    background-color: vars.$primaryColor !important;
   }
 }
