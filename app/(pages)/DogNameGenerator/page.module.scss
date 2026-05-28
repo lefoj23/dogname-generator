@@ -45,6 +45,15 @@
       height: calc(80% - 2rem);
     }
   }
+  .dogImage2 {
+    margin: 0 auto;
+    z-index: 99;
+    height: 100%;
+  }
+
+  ul{
+    min-width: 100%;
+  }
 }
 
 .nameItem {
@@ -66,17 +75,28 @@
     font-weight: 400;
   }
 
-  &:hover{
+  &:hover {
     color: vars.$primaryColor;
   }
-  
-  &.nameIndex-0, &.nameIndex-6{
+
+  &.nameIndex-0,
+  &.nameIndex-6 {
     opacity: 0.25;
   }
-  &.nameIndex-1, &.nameIndex-5{
-    opacity: 0.50;
+  &.nameIndex-1,
+  &.nameIndex-5 {
+    opacity: 0.5;
   }
-  &.nameIndex-2, &.nameIndex-4{
+  &.nameIndex-2,
+  &.nameIndex-4 {
     opacity: 0.75;
   }
 }
+
+.arrowIcon {
+  height: 3rem;
+  width: 3rem;
+  font-size: 5rem;
+}
+
+
