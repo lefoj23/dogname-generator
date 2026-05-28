@@ -60,7 +60,7 @@ const LettersPaging = () => {
       >
         All pets names
       </h3>
-      <div className="w-full flex flex-wrap justify-center gap-4">
+      <div className="w-full flex flex-wrap justify-center gap-2">
         {
           // determine groups based on width
         }
