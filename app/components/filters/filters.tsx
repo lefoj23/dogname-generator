@@ -23,9 +23,9 @@ const Filters = () => {
   const [categories, setCategories] = useState<ICategoriesData[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [selectedCategories, setSelectedCategories] = useState<
-    ICategoriesData[]
-  >([]);
+  const [filterCategories, setFilterCategories] = useState<ICategoriesData[]>(
+    [],
+  );
 
   const [selectedFilterGroup, setSelectedFilterGroup] =
     useState<IFilterGroups | null>(null);
@@ -37,6 +37,7 @@ const Filters = () => {
 
   const expandFilter = (filterGroup: IFilterGroups) => {
     setSelectedFilterGroup(null);
+    setFilterCategories([]);
 
     const updatedGroups = filterGroups.map((group) => {
       if (group === filterGroup) {
@@ -48,7 +49,7 @@ const Filters = () => {
     let selectedCategoryies = categories.filter((category) =>
       filterGroup.categoryIds.includes(category.id),
     );
-    setSelectedCategories(selectedCategoryies);
+    setFilterCategories(selectedCategoryies);
 
     let hasSelected = updatedGroups.some((item) => item.isSelected);
 
@@ -94,7 +95,7 @@ const Filters = () => {
     return (
       <>
         <div className="flex flex-row flex-wrap justify-center items-center gap-3">
-          {selectedCategories.map((category) => {
+          {filterCategories.map((category) => {
             const isSelected = isCategorySelected(category.id);
             return (
               <div
@@ -208,22 +209,38 @@ const Filters = () => {
         </div>
       )}
 
-      {(isMobile
-        ? selectedCategories.length > 0 &&
-          isFilterOpen &&
-          selectedFilterGroup != null
-        : selectedCategories.length > 0 && selectedFilterGroup != null) && (
-        <div
-          className={
-            styles.optionsWrapper +
-            (isMobile
-              ? ` flex flex-col items-center ${styles.mobile} justify-around flex-wrap text-center`
-              : ` flex flex-col items-center`)
-          }
-        >
-          {renderOptions()}
-        </div>
-      )}
+      <AnimatePresence>
+        {(isMobile
+          ? filterCategories.length > 0 &&
+            isFilterOpen &&
+            selectedFilterGroup != null
+          : filterCategories.length > 0 && selectedFilterGroup != null) && (
+          <motion.div
+            className={
+              styles.optionsWrapper +
+              (isMobile
+                ? ` flex flex-col items-center ${styles.mobile} justify-around flex-wrap text-center`
+                : ` flex flex-col items-center`)
+            }
+            initial={{ opacity: 0, height: 0 }}
+            animate={{
+              opacity: 1,
+              height: "calc(10vh - 0.5rem)",
+              transition: { duration: 0.8, ease: "easeIn" },
+            }}
+            exit={{
+              opacity: 0,
+              height: 0,
+              transition: {
+                duration: 0.8,
+                ease: "easeOut",
+              },
+            }}
+          >
+            {renderOptions()}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

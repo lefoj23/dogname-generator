@@ -5,12 +5,14 @@ interface LettersState {
   data: ILettersResponse | null;
   isLoading: boolean;
   error: string | null;
+  selectedLetter: string | null;
 }
 
 const initialState: LettersState = {
   data: null,
   isLoading: false,
   error: null,
+  selectedLetter: null,
 };
 
 const lettersSlice = createSlice({
@@ -31,8 +33,11 @@ const lettersSlice = createSlice({
       state.error = null;
       state.isLoading = false;
     },
+    setSelectedLetter(state, action: PayloadAction<string | null>) {
+      state.selectedLetter = action.payload;
+    }
   },
 });
 
-export const { setLetters, setLoading, setError, clearLetters } = lettersSlice.actions;
+export const { setLetters, setLoading, setError, clearLetters, setSelectedLetter } = lettersSlice.actions;
 export default lettersSlice.reducer;

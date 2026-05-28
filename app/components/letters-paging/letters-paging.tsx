@@ -6,9 +6,12 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { useState, useEffect } from "react";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { setSelectedLetter } from "../../store/lettersSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const LettersPaging = () => {
   const isMobile = useIsMobile();
+  const dispatch = useAppDispatch();
 
   const { data: letters, loading, error, refresh } = useLettersDriveData();
 
@@ -93,7 +96,10 @@ const LettersPaging = () => {
                             ? styles.selectedLetter
                             : ""
                         }
-                        onClick={() => setSelectedLetterIndex(index)}
+                        onClick={() => {
+                          setSelectedLetterIndex(index);
+                          dispatch(setSelectedLetter(letter));
+                        }}
                       />
                     );
                   })}
@@ -117,7 +123,10 @@ const LettersPaging = () => {
                   className={
                     index === selectedLetterIndex ? styles.selectedLetter : ""
                   }
-                  onClick={() => setSelectedLetterIndex(index)}
+                  onClick={() => {
+                    setSelectedLetterIndex(index);
+                    dispatch(setSelectedLetter(letter));
+                  }}
                 />
               ))}
             </Card>
