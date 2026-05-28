@@ -27,12 +27,17 @@ const Filters = () => {
     ICategoriesData[]
   >([]);
 
+  const [selectedFilterGroup, setSelectedFilterGroup] =
+    useState<IFilterGroups | null>(null);
+
   useEffect(() => {
     if (data?.filterGroups) setFilterGroups(data.filterGroups);
     if (data?.data) setCategories(data.data);
   }, [data]);
 
   const expandFilter = (filterGroup: IFilterGroups) => {
+    setSelectedFilterGroup(null);
+
     const updatedGroups = filterGroups.map((group) => {
       if (group === filterGroup) {
         return { ...group, isSelected: !group.isSelected };
@@ -45,6 +50,9 @@ const Filters = () => {
     );
     setSelectedCategories(selectedCategoryies);
 
+    let hasSelected = updatedGroups.some((item) => item.isSelected);
+
+    setSelectedFilterGroup(hasSelected ? filterGroup : null);
     setFilterGroups(updatedGroups);
   };
 
@@ -201,8 +209,10 @@ const Filters = () => {
       )}
 
       {(isMobile
-        ? selectedCategories.length > 0 && isFilterOpen
-        : selectedCategories.length > 0) && (
+        ? selectedCategories.length > 0 &&
+          isFilterOpen &&
+          selectedFilterGroup != null
+        : selectedCategories.length > 0 && selectedFilterGroup != null) && (
         <div
           className={
             styles.optionsWrapper +
