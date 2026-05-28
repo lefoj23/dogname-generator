@@ -7,6 +7,7 @@ import { Skeleton } from "primereact/skeleton";
 import { ICategoriesData, IFilterGroups } from "../../models/categories";
 import { useState, useEffect } from "react";
 import { Checkbox } from "primereact/checkbox";
+import { motion, AnimatePresence } from "motion/react";
 
 const Filters = () => {
   const isMobile = useIsMobile();
@@ -62,7 +63,7 @@ const Filters = () => {
             <h4 className={styles.fontRoboto + " text-lg p-3"}>
               {group.label}
             </h4>
-            <i
+            <motion.i
               className={
                 (group.isSelected ? "pi pi-angle-up" : "pi pi-angle-down") +
                 " text-2xl items-center primary"
@@ -72,7 +73,9 @@ const Filters = () => {
                 fontSize: "1.25rem",
                 fontWeight: "lighter",
               }}
-            ></i>
+              animate={{ rotate: group.isSelected ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            />
           </div>
         ))}
       </>
@@ -142,25 +145,58 @@ const Filters = () => {
               <h4 className={"text-lg p-3 align-middle"}>Filters:</h4>
             </div>
             {isMobile ? (
-              <i
-                className={`pi ${isFilterOpen ? "pi-filter-fill" : "pi-filter"} w-3/4 text-right m-4 cursor-pointer`}
+              <div
+                className="w-3/4 text-right cursor-pointer"
                 onClick={() => setIsFilterOpen((open) => !open)}
-              ></i>
+              >
+                <motion.i
+                  className="pi pi-filter m-4 "
+                  animate={{ opacity: isFilterOpen ? 0 : 1 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ pointerEvents: "none" }}
+                ></motion.i>
+                <motion.i
+                  className="pi pi-filter-fill m-4"
+                  animate={{ opacity: isFilterOpen ? 1 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    pointerEvents: "none",
+                  }}
+                ></motion.i>
+              </div>
             ) : (
               renderFilterTabs()
             )}
           </div>
 
-          {isMobile && isFilterOpen && (
-            <div
-              className={
-                styles.filterContainer +
-                ` flex flex-row items-center justify-around flex-wrap ${styles.mobile}`
-              }
-            >
-              {renderFilterTabs()}
-            </div>
-          )}
+          <AnimatePresence>
+            {isMobile && isFilterOpen && (
+              <motion.div
+                className={
+                  styles.filterContainer +
+                  ` flex flex-row items-center justify-around flex-wrap ${styles.mobile}`
+                }
+                initial={{ opacity: 0, height: 0 }}
+                animate={{
+                  opacity: 1,
+                  height: "auto",
+                  transition: { duration: 0.25, ease: "easeIn" },
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                  transition: {
+                    duration: 1,
+                    ease: "easeOut",
+                  },
+                }}
+              >
+                {renderFilterTabs()}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )}
 
