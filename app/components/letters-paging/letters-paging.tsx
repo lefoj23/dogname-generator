@@ -34,7 +34,11 @@ const LettersPaging = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-start justify-center m-2 gap-6 w-3/4">
-        <Skeleton width={isMobile ? "100%" : "15vw"} height="4rem" className="mb-1"></Skeleton>
+        <Skeleton
+          width={isMobile ? "100%" : "15vw"}
+          height="4rem"
+          className="mb-1"
+        ></Skeleton>
         <Skeleton width="100%" height="3rem"></Skeleton>
       </div>
     );
@@ -48,7 +52,7 @@ const LettersPaging = () => {
     <div
       className={
         "flex flex-col items-start justify-center m-2" +
-        (isMobile ? ` w-full ${styles.mobile}` : " max-w-75vw")
+        (isMobile ? ` w-full mb-4 ${styles.mobile}` : " max-w-75vw")
       }
     >
       <h3
@@ -61,44 +65,10 @@ const LettersPaging = () => {
         All pets names
       </h3>
       <div className="w-full flex flex-wrap justify-center gap-2">
-        {
-          // determine groups based on width
-        }
         {(() => {
           const letterData = letters?.data || [];
 
-          const chunkArray = (arr: string[], size: number) => {
-            const res: string[][] = [];
-            for (let i = 0; i < arr.length; i += size)
-              res.push(arr.slice(i, i + size));
-            return res;
-          };
-
-          // if (width !== null && width < 480) {
-          //   // very small: multiple cards with 4 letters each
-          //   const groups = chunkArray(letterData, 4);
-          //   return groups.map((group, gIdx) => (
-          //     <Card key={gIdx} className={styles.lettersWrapper + " p-3"}>
-          //       <div className="flex gap-2 flex-wrap justify-center">
-          //         {group.map((letter, i) => {
-          //           const index = gIdx * 4 + i;
-          //           return (
-          //             <Button
-          //               key={index}
-          //               label={letter}
-          //               rounded
-          //               text
-          //               className={index === selectedLetterIndex ? styles.selectedLetter : ""}
-          //               onClick={() => setSelectedLetterIndex(index)}
-          //             />
-          //           );
-          //         })}
-          //       </div>
-          //     </Card>
-          //   ));
-          // }
-
-          if (width !== null && width < 1024) {
+          if (width !== null && width <= 1024) {
             // mobile/tablet: two cards A-M and N-Z
             const first = letterData.slice(0, 13);
             const second = letterData.slice(13);

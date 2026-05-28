@@ -1,27 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchLettersDriveData } from "../services/api-service";
-import { ILettersResponse } from "../models/letters";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { setLetters, setLoading, setError } from "../store/lettersSlice";
 
 export function useLettersDriveData() {
-  const [data, setData] = useState<ILettersResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.letters.data);
+  const loading = useAppSelector((state) => state.letters.isLoading);
+  const error = useAppSelector((state) => state.letters.error);
 
   const loadLetters = async () => {
-    setLoading(true);
-    setError(null);
-
+    dispatch(setLoading(true));
+    dispatch(setError(null));
     try {
       const result = await fetchLettersDriveData();
-      setData(result);
+      dispatch(setLetters(result));
     } catch (err) {
-      setError(
-        err instanceof Error ? err : new Error("Failed to load letters"),
-      );
+      dispatch(setError(err instanceof Error ? err.message : "Failed to load letters"));
     } finally {
-      setLoading(false);
+      dispatch(setLoading(false));
     }
   };
 

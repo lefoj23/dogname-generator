@@ -12,7 +12,8 @@ export default async function DogNameGenerator() {
       <GenderSelection />
       <Filters />
       <LettersPaging />
-      <Body />
+      <br />
+      <Body/>
     </div>
   );
 }

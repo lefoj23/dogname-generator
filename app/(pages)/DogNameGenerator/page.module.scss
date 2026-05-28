@@ -5,7 +5,7 @@
 
   &.mobile {
     margin: 2rem auto;
-    height: 25vh;
+    height: calc(50% - 5rem);
   }
 
   h1 {
@@ -23,7 +23,7 @@
     z-index: -99;
     transform: translateY(-10vh);
     &.mobile {
-      font-size: calc(8rem * 0.8);
+      font-size: calc(8rem * 0.75);
       transform: translateY(-5vh);
     }
   }
@@ -32,9 +32,8 @@
     margin: 2rem;
     z-index: 99;
     height: 75%;
-
     &.mobile {
-      height: 100%;
+      height: calc(80% - 2rem);
     }
   }
 }

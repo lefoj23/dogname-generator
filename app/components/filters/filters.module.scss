@@ -65,7 +65,8 @@
 }
 
 .optionsWrapper {
-  height: calc(5vh + 1rem) !important;
+  padding: 0.5rem;
+  min-height: calc(10vh - 0.5rem) !important;
   width: 100%;
   background-color: vars.$neutralWhite;
   > div {
@@ -74,7 +75,8 @@
 
   &.mobile {
     height: unset !important;
-    margin-top: 1rem;
-    padding: 1rem;
+    min-height: unset !important;
+    // margin-top: 1rem;
+    padding: 2rem 0.5rem;
   }
 }
