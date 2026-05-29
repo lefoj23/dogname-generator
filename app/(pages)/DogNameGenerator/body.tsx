@@ -94,18 +94,18 @@ export default function Body() {
         startIndex = Math.max(0, endIndex - maxIndexNumber);
       }
     }
-    console.log("befselectedIndex", selectedIndex);
+    
 
     if (selectedIndex >= endIndex) {
       let proposeSelectedIndex = Math.max(selectedIndex / endIndex);
-      console.log("selectedLetter", selectedLetter);
+   
 
       if (
         selectedLetter != null &&
         loadedNames?.data[selectedIndex]?.title.startsWith(selectedLetter)
       ) {
         selectedIndex = proposeSelectedIndex;
-        console.log("proposeSelectedIndex", proposeSelectedIndex);
+
       } else {
         if (selectedLetter != null)
           selectedIndex =
@@ -114,10 +114,7 @@ export default function Body() {
             ) ?? selectedIndex;
       }
     }
-    console.log("loadedNames", loadedNames);
 
-    console.log("selectedIndex", selectedIndex);
-    console.log("endIndex", endIndex);
     setSelectedNameIndex(selectedIndex);
 
     let count = 0;
