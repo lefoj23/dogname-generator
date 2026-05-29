@@ -43,6 +43,14 @@ export default function Body() {
 
   const [displayDetailedView, setDisplayDetailedView] =
     useState<boolean>(false);
+  const [width, setWidth] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const LandingPage = () => {
     return (
@@ -86,7 +94,30 @@ export default function Body() {
         startIndex = Math.max(0, endIndex - maxIndexNumber);
       }
     }
+    console.log("befselectedIndex", selectedIndex);
 
+    if (selectedIndex >= endIndex) {
+      let proposeSelectedIndex = Math.max(selectedIndex / endIndex);
+      console.log("selectedLetter", selectedLetter);
+
+      if (
+        selectedLetter != null &&
+        loadedNames?.data[selectedIndex]?.title.startsWith(selectedLetter)
+      ) {
+        selectedIndex = proposeSelectedIndex;
+        console.log("proposeSelectedIndex", proposeSelectedIndex);
+      } else {
+        if (selectedLetter != null)
+          selectedIndex =
+            loadedNames?.data?.findLastIndex((f) =>
+              f.title.startsWith(selectedLetter),
+            ) ?? selectedIndex;
+      }
+    }
+    console.log("loadedNames", loadedNames);
+
+    console.log("selectedIndex", selectedIndex);
+    console.log("endIndex", endIndex);
     setSelectedNameIndex(selectedIndex);
 
     let count = 0;
@@ -199,6 +230,18 @@ export default function Body() {
     );
   };
 
+  const ValidateIfNamesHasStartsWithLetter = (): boolean => {
+    if (selectedLetter != null)
+      return (
+        loadedNames?.data.some((items) =>
+          items.title.startsWith(selectedLetter),
+        ) ?? false
+      );
+    else return false;
+  };
+
+  const SpecialHandleMobileView = (): boolean => width != null && width <= 425;
+
   useEffect(() => {
     let letterIndex =
       loadedNames?.data.findIndex((name) =>
@@ -232,6 +275,7 @@ export default function Body() {
   }, [selectedGender, namesData, selectedCategoryIds, maxIndexNumber]);
 
   if (loading || error) return null;
+
   return (
     <>
       {selectedLetter == null &&
@@ -243,76 +287,98 @@ export default function Body() {
           className={
             styles.pageWrapper +
             (isMobile
-              ? ` flex flex-row items-center justify-center w-100 ${styles.mobile}`
+              ? ` ${styles.mobile} flex flex-row items-center justify-center w-100 h-full`
               : ` flex flex-col items-center justify-center h-auto w-100`)
           }
         >
-          <div className={`flex flex-row  justify-center w-full gap-4 ${displayDetailedView ? "items-start" : "items-center"}`}>
-            {!displayDetailedView && (
+          <div
+            className={
+              isMobile
+                ? `${styles.mobile} flex flex-row justify-center h-full w-full gap-4  ${displayDetailedView ? "items-start" : "items-center "}`
+                : ` flex flex-row  justify-center w-full gap-4 ${displayDetailedView ? "items-start" : "items-center"}`
+            }
+          >
+            {loadedNames?.data &&
+            loadedNames?.data.length > 0 &&
+            ValidateIfNamesHasStartsWithLetter() ? (
+              <>
+                {!displayDetailedView && (
+                  <>
+                    <img
+                      src={dog2.src}
+                      alt="Dog"
+                      className={`${isMobile && styles.mobile} ${styles.dogImage2}`}
+                    />
+                    <ul className="w-2/5">{nameElements}</ul>
+                  </>
+                )}
+
+                <div
+                  className={`${styles.arrowDiv} flex flex-col w-100 w-1/5 items-center justify-around`}
+                >
+                  <i
+                    className={
+                      "pi pi-angle-up text-2xl items-center primary cursor-pointer h-1/4 " +
+                      styles.arrowIcon
+                    }
+                    style={{
+                      color: "var(--primary-color)",
+                      fontSize: "3.5rem",
+                      fontWeight: "200",
+                    }}
+                    onClick={() => {
+                      selectedNameIndex !== null && selectedNameIndex > 0
+                        ? renderNames(selectedNameIndex - 1)
+                        : null;
+                    }}
+                  />
+                  <div className="block h-100"></div>
+                  <i
+                    className={
+                      "pi pi-angle-down text-2xl items-center primary cursor-pointer h-1/4" +
+                      styles.arrowIcon
+                    }
+                    style={{
+                      color: "var(--primary-color)",
+                      fontSize: "3.5rem",
+                      fontWeight: "200",
+                    }}
+                    onClick={() => {
+                      selectedNameIndex !== null &&
+                      selectedNameIndex < (loadedNames?.data.length ?? 0) - 1
+                        ? renderNames(selectedNameIndex + 1)
+                        : null;
+                    }}
+                  />
+                </div>
+
+                {displayDetailedView && (
+                  <ul
+                    className={`${styles.detailedViewUl} items-left text-left`}
+                  >
+                    {nameElements}
+                  </ul>
+                )}
+              </>
+            ) : (
               <>
                 <img
                   src={dog2.src}
                   alt="Dog"
                   className={`${isMobile && styles.mobile} ${styles.dogImage2}`}
                 />
-                <ul className="w-2/5">{nameElements}</ul>
+                <SplitText
+                  text={`Ooops we\n don't have any\n names that match\n your criteria!`}
+                  className={`text-2sm font-bold ${styles.noResults} ${isMobile && styles.mobile}`}
+                />
               </>
-            )}
-
-            {loadedNames?.data && loadedNames?.data.length > 0 ? (
-              <div
-                className={`${styles.arrowDiv} flex flex-col w-100 w-1/5 items-center justify-around`}
-              >
-                <i
-                  className={
-                    "pi pi-angle-up text-2xl items-center primary cursor-pointer h-1/4 " +
-                    styles.arrowIcon
-                  }
-                  style={{
-                    color: "var(--primary-color)",
-                    fontSize: "3.5rem",
-                    fontWeight: "200",
-                  }}
-                  onClick={() => {
-                    selectedNameIndex !== null && selectedNameIndex > 0
-                      ? renderNames(selectedNameIndex - 1)
-                      : null;
-                  }}
-                />
-                <div className="block h-100"></div>
-                <i
-                  className={
-                    "pi pi-angle-down text-2xl items-center primary cursor-pointer h-1/4" +
-                    styles.arrowIcon
-                  }
-                  style={{
-                    color: "var(--primary-color)",
-                    fontSize: "3.5rem",
-                    fontWeight: "200",
-                  }}
-                  onClick={() => {
-                    selectedNameIndex !== null &&
-                    selectedNameIndex < (loadedNames?.data.length ?? 0) - 1
-                      ? renderNames(selectedNameIndex + 1)
-                      : null;
-                  }}
-                />
-              </div>
-            ) : (
-              <SplitText
-                text={`Ooops we\n don't have any\n names that match\n your criteria!`}
-                className={`text-2sm font-bold ${isMobile && styles.mobile} ${styles.noResults}`}
-              />
             )}
 
             {displayDetailedView &&
             loadedNames?.data[selectedNameIndex ?? 0] ? (
               <>
-                <ul className={`${styles.detailedViewUl} items-left text-left`}>
-                  {nameElements}
-                </ul>
                 <div
-                  className={`${styles.detailedViewDiv} flex flex-col items-left`}
+                  className={`${styles.detailedViewDiv} flex flex-col items-left ${isMobile && styles.mobile}`}
                 >
                   {renderDetailedView()}
                 </div>
