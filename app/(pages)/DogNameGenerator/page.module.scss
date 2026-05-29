@@ -55,13 +55,14 @@
     }
   }
   .dogImage2 {
-    margin: 0 auto;
+    // margin: 0 auto;
     z-index: 99;
     height: 100%;
+    margin: 0;
   }
 
   ul {
-    min-width: 100%;
+    max-width: 15vw;
   }
 }
 
@@ -89,7 +90,7 @@
   }
 
   &.nameIndex-0,
-  &.nameIndex-6 {
+  &.nameIndex-6:not(.detailedView) {
     opacity: 0.25;
   }
   &.nameIndex-1,
@@ -100,10 +101,113 @@
   &.nameIndex-4 {
     opacity: 0.75;
   }
+
+  &.detailedView {
+    font-size: 2rem;
+    line-height: 1.4;
+    text-align: left;
+    &.nameIndex-0,
+    &.nameIndex-10 {
+      opacity: 0.25 !important;
+    }
+    &.nameIndex-1,
+    &.nameIndex-2,
+    &.nameIndex-9,
+    &.nameIndex-8 {
+      opacity: 0.5 !important;
+    }
+    &.nameIndex-4,
+    &.nameIndex-6,
+    &.nameIndex-3,
+    &.nameIndex-7 {
+      opacity: 0.75 !important;
+    }
+
+    &.nameIndex-5 {
+      opacity: 1 !important;
+    }
+  }
+}
+
+.arrowDiv {
+  // position: absolute;
+  width: 5%;
+  // // right: 0;
+  height: 100%;
+  // transform: translateX(-300%);
+}
+
+.genderIcon {
+  // height:1rem;
+  // width: 100%;
+  font-size: 3rem;
+  // font-family: vars.$fontFamily2;
+  color: vars.$neutralDark;
+  // display: inline-block;
+  :last-child {
+    margin-right: 0.75rem;
+  }
 }
 
 .arrowIcon {
   height: 3rem;
   width: 3rem;
   font-size: 5rem;
+}
+
+.detailedViewUl {
+  width: 10%;
+}
+
+.detailedViewDiv {
+  width: 30%;
+  .categoryLabels {
+    font-family: vars.$fontFamily2;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: vars.$neutralDark;
+    margin-bottom: 0.5rem;
+    // max-width: 100%;
+    display: inline-block;
+  }
+
+  .definitionDiv {
+    font-size: 2rem;
+    color: vars.$neutralDark;
+    width: 100%;
+    line-height: 1.5;
+    font-weight: 300 !important;
+    font-family: vars.$fontFamily2;
+    padding: 2rem 0px;
+    border-top: 1px solid vars.$neutralLight;
+    border-bottom: 1px solid vars.$neutralLight;
+    min-height: 50% !important;
+    display: block;
+    margin: 1.5rem auto 2rem;
+  }
+
+  .footer {
+    span {
+      font-size: 1.2rem;
+      font-family: vars.$fontFamily2;
+      font-weight: 400 !important;
+    }
+  }
+
+  .footerIcons {
+    width: 8rem;
+    float: right;
+    :global(img) {
+      width: 2.25rem !important;
+    }
+  }
+
+  .relatedNames {
+    font-family: vars.$fontFamily2;
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: vars.$neutralDark;
+    margin: 1rem 0px;
+    // max-width: 100%;
+  }
 }
