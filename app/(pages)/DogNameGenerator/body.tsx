@@ -147,8 +147,6 @@ export default function Body() {
       .map((names) => names.title)
       .join(" - ");
 
-    console.log(relatedNames);
-
     return (
       <>
         {categoryLabels && (
