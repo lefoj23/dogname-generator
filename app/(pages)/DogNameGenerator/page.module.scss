@@ -208,11 +208,11 @@
   .footerIcons {
     width: 8rem;
     float: right;
-    :global(img) {
-      width: 2.25rem !important;
-    }
   }
 
+  .footerIcons :global(img) {
+    width: 2.25rem !important;
+  }
   .relatedNames {
     font-family: vars.$fontFamily2;
     font-size: 1.25rem;

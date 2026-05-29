@@ -9,11 +9,11 @@
   :global(.p-card-body) {
     padding: 0ch !important;
     // background-color: red !important;
-    :global(.p-card-content) {
-      padding: 0px !important;
-      display: flex;
-      flex-wrap: no-wrap;
-    }
+  }
+  :global(.p-card-body .p-card-content) {
+    padding: 0px !important;
+    display: flex;
+    flex-wrap: no-wrap;
   }
 
   :global(.p-button) {
@@ -34,12 +34,11 @@
       color: vars.$neutralWhite;
       background-color: vars.$primaryColor !important;
     }
-
-    :global(.p-button-label) {
-      font-weight: 500 !important;
-    }
   }
 
+  :global(.p-butto .p-button-label) {
+    font-weight: 500 !important;
+  }
   .selectedLetter {
     color: vars.$neutralWhite;
     background-color: vars.$primaryColor !important;

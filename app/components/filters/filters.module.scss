@@ -27,12 +27,10 @@
 .filterTitle {
   border-right: 1px solid vars.$neutralLight;
   height: 100%;
-
-  &:global(.border-r-0) {
-    border-right: unset !important;
-  }
 }
-
+.filterTitle:global(.border-r-0) {
+  border-right: unset !important;
+}
 .filters {
   height: 100% !important;
   box-sizing: border-box !important;
