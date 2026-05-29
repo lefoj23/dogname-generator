@@ -71,7 +71,7 @@ const LettersPaging = () => {
         {(() => {
           const letterData = letters?.data || [];
 
-          if (width !== null && width <= 1024) {
+          if (width !== null && width <= 1280) {
             // mobile/tablet: two cards A-M and N-Z
             const first = letterData.slice(0, 13);
             const second = letterData.slice(13);

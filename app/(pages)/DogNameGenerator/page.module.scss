@@ -3,7 +3,7 @@
 .pageWrapper {
   width: 100vw;
   // overflow: hidden;
-
+  margin-top: 2vh;
   &.mobile {
     margin: 2rem auto;
     height: calc(50% - 5rem);
@@ -37,10 +37,10 @@
     }
 
     &.noResults {
-      font-size: 7rem;
-      text-align: right !important;
-      align-items: flex-end;
-      width: 40vw;
+      font-size: 6rem;
+      // text-align: right !important;
+      // align-items: flex-end;
+      width: calc(20rem - 10vw);
       line-height: 1.5 !important;
       transform: unset;
     }
@@ -62,7 +62,10 @@
   }
 
   ul {
-    max-width: 15vw;
+    max-width: calc(25rem - 4vw);
+    .detailedViewUl {
+      width: calc(22rem - 8vw) !important;
+    }
   }
 }
 
@@ -131,7 +134,7 @@
 
 .arrowDiv {
   // position: absolute;
-  width: 5%;
+  width: calc(6rem - 2vw);
   // // right: 0;
   height: 100%;
   // transform: translateX(-300%);
@@ -155,15 +158,13 @@
   font-size: 5rem;
 }
 
-.detailedViewUl {
-  width: 10%;
-}
-
 .detailedViewDiv {
-  width: 30%;
+  width: calc(45rem - 3vw);
+  padding-top: 2rem;
+  height: 100%;
   .categoryLabels {
     font-family: vars.$fontFamily2;
-    font-size: 2.5rem;
+    font-size: calc(2.5rem * 0.8);
     font-weight: 400;
     color: vars.$neutralDark;
     margin-bottom: 0.5rem;
@@ -172,18 +173,22 @@
   }
 
   .definitionDiv {
-    font-size: 2rem;
+    font-size: calc(2rem * 0.8);
     color: vars.$neutralDark;
     width: 100%;
     line-height: 1.5;
     font-weight: 300 !important;
     font-family: vars.$fontFamily2;
-    padding: 2rem 0px;
+    padding: calc(2rem - 1vh);
     border-top: 1px solid vars.$neutralLight;
     border-bottom: 1px solid vars.$neutralLight;
     min-height: 50% !important;
     display: block;
     margin: 1.5rem auto 2rem;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    max-height: 20vh;
   }
 
   .footer {
@@ -208,6 +213,11 @@
     font-weight: 300;
     color: vars.$neutralDark;
     margin: 1rem 0px;
+    max-height: 5vh;
+    text-overflow: ellipsis;
+    // overflow-y: hidden;
+    overflow-y: auto;
+    overflow-wrap: break-word;
     // max-width: 100%;
   }
 }

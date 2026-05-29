@@ -165,13 +165,17 @@ export default function Body() {
         )}
 
         <div
-          className={styles.definitionDiv}
+          className={styles.definitionDiv + " scrollbar-auto scrollbar-thin"}
           dangerouslySetInnerHTML={{ __html: nameData?.definition as string }}
         />
 
         <div className={styles.footer}>
           <span>Related Name</span>
-          <h3 className={`${styles.relatedNames}`}>{relatedNames}</h3>
+          <h3
+            className={`${styles.relatedNames} scrollbar-auto scrollbar-thin`}
+          >
+            {relatedNames}
+          </h3>
 
           <div className={`${styles.footerIcons} flex flex-row gap-1`}>
             <img
@@ -243,7 +247,7 @@ export default function Body() {
               : ` flex flex-col items-center justify-center h-auto w-100`)
           }
         >
-          <div className="flex flex-row items-center justify-center w-full">
+          <div className={`flex flex-row  justify-center w-full gap-4 ${displayDetailedView ? "items-start" : "items-center"}`}>
             {!displayDetailedView && (
               <>
                 <img
